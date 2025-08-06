@@ -17,7 +17,7 @@ teacher_ID_counters = 1
 
 def add_teacher(name,specialty):
     global teacher_ID_counters
-    new_teacher = Teacher(teacher_ID_counters,name,specialty)
+    new_teacher = Teacher(name,teacher_ID_counters,specialty)
     teacher_db.append(new_teacher)
     teacher_ID_counters += 1
     print(f"Core: Teacher {name} is successfully added")
@@ -68,7 +68,7 @@ def find_students(find):
     pass
 
 def find_teachers(find):
-    print(f"\m--- Finding Teachers matching '{find}' ---")
+    print(f"\n--- Finding Teachers matching '{find}' ---")
     result = []
     for term in teacher_db:
         if find.lower() in term.name.lower() or str(term.specialty) == find:
@@ -80,6 +80,69 @@ def find_teachers(find):
             print(f"Name: {teacher.name}, ID: {teacher.ID}, Specialty: {teacher.specialty}")
     pass
 
+def find_student_by_id(student_id):
+    for student in student_db:
+        if student.ID == student_id:
+            return student
+    return None
 
+def front_desk_register(name, instrument):
+    global student_ID_counters
+    new_student = Student(name, student_ID_counters)
+    student_db.append(new_student)
+    student_ID_counters += 1
+    
+    front_desk_enrol(new_student.ID, instrument)
+    print(f"Front Desk: Successfully registered '{name}' and enrolled them in '{instrument}'.")
 
+def front_desk_enrol(student_id, instrument):
+    student = find_student_by_id(student_id)
+    if student:
+        student.instrument_learning.append(instrument)
+        print(f"Front Desk: Enrolled student {student_id} in '{instrument}'.")
+    else:
+        print(f"Error: Student ID {student_id} not found.")
 
+def front_desk_lookup(term):
+    print(f"\n--- Performing lookup for '{term}' ---")
+    find_students(term)
+    find_teachers(term)
+
+def main():
+    while True:
+        print("\n===== Music School Front Desk =====")
+        print("1. Register New Student")
+        print("2. Enrol Existing Student")
+        print("3. Lookup Student or Teacher")
+        print("4. (Admin) List all Students")
+        print("5. (Admin) List all Teachers")
+        print("q. Quit")
+        
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            name = input("Enter student name: ")
+            instrument = input("Enter instrument to enrol in: ")
+            front_desk_register(name, instrument)
+        elif choice == '2':
+            try:
+                student_id = int(input("Enter student ID: "))
+                instrument = input("Enter instrument to enrol in: ")
+                front_desk_enrol(student_id, instrument)
+            except ValueError:
+                print("Invalid ID. Please enter a number.")
+        elif choice == '3':
+            term = input("Enter search term: ")
+            front_desk_lookup(term)
+        elif choice == '4':
+            list_students()
+        elif choice == '5':
+            list_teachers()
+        elif choice.lower() == 'q':
+            print("Exiting program. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
