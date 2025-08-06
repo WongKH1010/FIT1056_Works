@@ -57,14 +57,28 @@ def find_students(find):
     print(f"\n--- Finding Students matching '{find}' ---")
     result = []
     for term in student_db:
-        if find == term:
-            result.append(find)
+        if find.lower() in term.name.lower():
+            result.append(term)
     if len(result) == 0:
         print("\nNo match found")
     else:
-        print(result)
-    
+        for student in result:
+            enrolled = ",".join(student.instrument_learning)
+            print(f"Name: {student.name}, ID: {student.ID}, Enrolled: {enrolled}")            
+    pass
 
+def find_teachers(find):
+    print(f"\m--- Finding Teachers matching '{find}' ---")
+    result = []
+    for term in teacher_db:
+        if find.lower() in term.name.lower() or str(term.specialty) == find:
+            result.append(term)
+    if len(result) == 0:
+        print("\nNo match found")
+    else:
+        for teacher in result:
+            print(f"Name: {teacher.name}, ID: {teacher.ID}, Specialty: {teacher.specialty}")
+    pass
 
 
 
