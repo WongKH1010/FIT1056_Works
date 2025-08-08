@@ -1,3 +1,4 @@
+### Fragment 1
 class Student:
     def __init__(self,name,student_ID):
         self.ID = student_ID
@@ -15,6 +16,7 @@ teacher_db = []
 student_ID_counters = 1
 teacher_ID_counters = 1
 
+### Fragment 2
 def add_teacher(name,specialty):
     global teacher_ID_counters
     new_teacher = Teacher(name,teacher_ID_counters,specialty)
@@ -80,6 +82,7 @@ def find_teachers(find):
             print(f"Name: {teacher.name}, ID: {teacher.ID}, Specialty: {teacher.specialty}")
     pass
 
+### Fragment 3
 def find_student_by_id(student_id):
     for student in student_db:
         if student.ID == student_id:
@@ -108,6 +111,7 @@ def front_desk_lookup(term):
     find_students(term)
     find_teachers(term)
 
+### Fragment 4
 def main():
     while True:
         print("\n===== Music School Front Desk =====")
