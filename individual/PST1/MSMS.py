@@ -89,14 +89,14 @@ def find_student_by_id(student_id):
             return student
     return None
 
-def front_desk_register(name, instrument):
+def front_desk_register(name,student_ID,instrument):
     global student_ID_counters
-    new_student = Student(name, student_ID_counters)
+    new_student = Student(name, student_ID)
     student_db.append(new_student)
     student_ID_counters += 1
     
     front_desk_enrol(new_student.ID, instrument)
-    print(f"Front Desk: Successfully registered '{name}' and enrolled them in '{instrument}'.")
+    print(f"Front Desk: Successfully registered '{name}',student id: '{student_ID}' and enrolled them in '{instrument}'.")
 
 def front_desk_enrol(student_id, instrument):
     student = find_student_by_id(student_id)
