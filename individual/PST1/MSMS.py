@@ -130,7 +130,7 @@ def front_desk_register(name,student_id,instrument):
     student_serial_counter +=1
 
     front_desk_enrol(student_id,instrument)
-    print(f"Front Desk: Registered {name} (ID: {student_id} enrolled in {instrument}")
+    print(f"Front Desk: Registered {name} (ID: {student_id}) enrolled in {instrument}")
 
 def front_desk_enrol(student_id,instrument):
     student = find_student_by_id(student_id)
