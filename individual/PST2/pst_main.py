@@ -212,6 +212,7 @@ def find_teacher(term):
             return
     print(f"Error: Student with term {term} not found")
 
+#Listing Features
 def list_teachers():
     """Listing teachers recorded"""
     print("\n---- Teacher List ----")
@@ -247,6 +248,8 @@ def list_students():
         enrollment = ", ".join(student['enrolled_in'])
         print(f"{student['name']:<{max_name_len+2}}{student['id']:<8}{enrollment:<{max_enrolment_len+2}}")
 
+#Main Function
+#To show a menu interface for user to do decision
 def main():
     load_data()
 
@@ -258,17 +261,18 @@ def main():
         print("4. Print Student Card")
         print("5. (Admin) Update Teacher and Student Info")
         print("6. (Admin) Remove Teacher and Student")
-        print("7. Lisiting Students or Teachers")
+        print("7. Listing Students or Teachers")
+        print("8. Searching Students or Teachers")
         print("q. Quit")
 
-        choice = input("Please enter your choice: ")
+        choice = input("\nPlease enter your choice: ")
 
         made_change = False
 
         if choice == "1":
             password = input("Please enter your password: ")
             if check_password(password):
-                name = input("Enter your name: ")
+                name = input("\nEnter your name: ")
                 specialty = input("Enter your teaching specialty: ")
                 add_teacher(name,specialty)
             made_change = True
@@ -301,7 +305,6 @@ def main():
                 if check_student_password(password):
                     id = input("\nPlease enter your id: ")
                     if check_student_id(id):
-                        student = check_student_id(id)
                         find_student(id)
                         print("\n1. Name")
                         print("2. Enrolment")
@@ -313,7 +316,7 @@ def main():
                         elif choice_3 == "2":
                             user_input = input("\nPlease enter your new enrolment seperated by comma and the old instrument should be included if you still want to enrol")
                             new_enrolment = [i.strip() for i in user_input.split(",")]
-                            update_student(student['id'], enrolled_in=new_enrolment )
+                            update_student(id, enrolled_in=new_enrolment )
                         elif choice_3 == "3":
                             pass
                         else:
@@ -323,7 +326,6 @@ def main():
                 if check_password(password):
                     id = input("\nPlease enter your id: ")
                     if check_teacher_id(id):
-                        teacher = check_teacher_id(id)
                         find_teacher(id)
                         print("\n1. Name")
                         print("2. Specialty")
@@ -388,6 +390,17 @@ def main():
             if choice_2 == "2":
                 list_students()
             made_change = True
+        elif choice == "8":
+            print("==== Searching Front Desk ====")
+            print("1. Seacrh for teacher")
+            print("2. Search for student")
+            choice_2 = input("\nPlease enter your choice: ")
+            if choice_2 == "1":
+                term = input("\nPlease enter your choice: ")
+                find_teacher(term)
+            if choice_2 == "2":
+                term = input("\nPlease enter your choice: ")
+                find_student(term)
         elif choice.lower() == "q":
             print("Saving final changes and Exiting program. Goodbye!")
             made_change = True
