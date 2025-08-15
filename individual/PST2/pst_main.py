@@ -100,7 +100,7 @@ def register_student(name, instrument):
 def update_teacher(teacher_id, **fields):
     """Finds a teacher by ID and updates their data with provided fields"""
     for teacher in app_data["teachers"]:
-        if str(teacher["id"]) in str(teacher_id):
+        if str(teacher["id"]) == str(teacher_id):
             teacher.update(fields) 
             print(f"Teacher {teacher_id} updated.")
             return
@@ -109,7 +109,7 @@ def update_teacher(teacher_id, **fields):
 def update_student(student_id, **fields):
     """Finds a student by ID and updates their data with provided fileds"""
     for student in app_data['students']:
-        if str(student["id"]) in str(student_id):
+        if str(student["id"]) == str(student_id):
             student.update(fields)
             print(f"Student {student_id} updated.")
             return
@@ -118,7 +118,7 @@ def update_student(student_id, **fields):
 def remove_teacher(teacher_id):
     """Removes a teacher from the data store."""
     for teacher in app_data["teachers"]:
-        if str(teacher['id']) in str(teacher_id):
+        if str(teacher['id']) == str(teacher_id):
             app_data['teachers'].remove(teacher)
             print(f"The teacher with {teacher_id} is removed")
             return
@@ -156,7 +156,7 @@ def print_student_card(student_id):
     """Creates a text file badge for a student."""
     student_to_print = None
     for s in app_data['students']:
-        if s['id'] == student_id:
+        if str(s['id']) == str(student_id):
             student_to_print = s
             break #To stop the loop while the student is found
     
@@ -210,7 +210,7 @@ def find_teacher(term):
             print("Core: Teacher Found")
             print(f"Name: {teacher['name']} ID: {teacher['id']} Speciality: {teacher['specialty']}")
             return
-    print(f"Error: Student with term {term} not found")
+    print(f"Error: Teacher with term {term} not found")
 
 #Listing Features
 def list_teachers():
@@ -255,14 +255,12 @@ def main():
 
     while True:
         print("\n==== MSMS v2 (Persistent) ====")
-        print("1. (Admin) Add Teacher")
-        print("2. Register New Student")
-        print("3. Check-in Student")
-        print("4. Print Student Card")
-        print("5. (Admin) Update Teacher and Student Info")
-        print("6. (Admin) Remove Teacher and Student")
-        print("7. Listing Students or Teachers")
-        print("8. Searching Students or Teachers")
+        print("1. Register New Student")
+        print("2. Check-in Student")
+        print("3. Print Student Card")
+        print("4. Listing Students or Teachers")
+        print("5. Searching Students or Teachers")
+        print("6. Admin-Only Features")
         print("q. Quit")
 
         choice = input("\nPlease enter your choice: ")
@@ -270,128 +268,36 @@ def main():
         made_change = False
 
         if choice == "1":
-            password = input("Please enter your password: ")
-            if check_password(password):
-                name = input("\nEnter your name: ")
-                specialty = input("Enter your teaching specialty: ")
-                add_teacher(name,specialty)
-            made_change = True
-        
-        elif choice == "2":
             name = input("Enter your student name: ")
             instrument = input("Enter the instrument you enrolled in: ")
             register_student(name,instrument)
             made_change = True
         
-        elif choice == "3":
+        elif choice == "2":
             id = input("Enter your id: ")
             course_id = input("Enter your course_id: ")
             check_in(id,course_id)
             made_change = True
         
-        elif choice == "4":
+        elif choice == "3":
             student_id = input("Enter your student id: ")
             find_student(student_id)
             print_student_card(student_id)
             made_change = True
-        
-        elif choice == "5":
-            print("==== Updating Front Desk=====")
-            print("1. Update Student Profile")
-            print("2. Update Teacher Profile")
-            choice_2 = input("\nPlese Enter Your Choice:")
-            if choice_2 == "1":
-                password = input("\nPlease enter your password: ")
-                if check_student_password(password):
-                    id = input("\nPlease enter your id: ")
-                    if check_student_id(id):
-                        find_student(id)
-                        print("\n1. Name")
-                        print("2. Enrolment")
-                        print("3. Quit")
-                        choice_3 = input("\nPlease enter your choice")
-                        if choice_3 == "1":
-                            new_name = input("\nPlease enter a new name:")
-                            update_student(id, name=new_name)
-                        elif choice_3 == "2":
-                            user_input = input("\nPlease enter your new enrolment seperated by comma and the old instrument should be included if you still want to enrol")
-                            new_enrolment = [i.strip() for i in user_input.split(",")]
-                            update_student(id, enrolled_in=new_enrolment )
-                        elif choice_3 == "3":
-                            pass
-                        else:
-                            print("Invalid Input!")
-            elif choice_2 == "2":
-                password = input("\nPlease enter your password: ")
-                if check_password(password):
-                    id = input("\nPlease enter your id: ")
-                    if check_teacher_id(id):
-                        find_teacher(id)
-                        print("\n1. Name")
-                        print("2. Specialty")
-                        print("3. Quit")
-                        choice_3 = input("\nPlease enter your choice")
-                        if choice_3 == "1":
-                            new_name = input("\nPlease enter a new name:")
-                            update_teacher(id, name=new_name)
-                        elif choice_3 == "2":
-                            new_specialty = input("Please enter your new specialty")
-                            update_teacher(id, specialty=new_specialty )
-                        elif choice_3 == "3":
-                            pass
-                        else:
-                            print("Invalid Input!")
-            made_change = True
-        
-        elif choice == "6":
-            password = input("Please enter your password: ")
-            if check_password(password):
-                print("==== Removing Front Desk ====")
-                print("1. Remove Student")
-                print("2. Remove Teacher")
-                choice_2 = input("\nPlease enter your choice: ")
-                if choice_2 == "1":
-                    id = input("\nEnter the student id: ")
-                    if check_student_id(id):
-                        find_student(id)
-                        print("REMINDER: Please make sure this is the correct student profile to delete as it can't be recovered anymore!")
-                        print("1. Yes")
-                        print("2. No")
-                        choice_3 = input("\nPlease enter your choice: ")
-                        if choice_3 == "1":
-                            remove_student(id)
-                        elif choice_3 == "2":
-                            pass
-                        else:
-                            print("Invalid Input!")
-                if choice_2 == "2":
-                    id = input("\nEnter the teacher id: ")
-                    if check_teacher_id(id):
-                        find_teacher(id)
-                        print("REMINDER: Please make sure this is the correct teacher profile to delete as it can't be recovered anymore!")
-                        print("1. Yes")
-                        print("2. No")
-                        choice_3 = input("\nPlease enter your choice: ")
-                        if choice_3 == "1":
-                            remove_teacher(id)
-                        elif choice_3 == "2":
-                            pass
-                        else:
-                            print("Invalid Input!")
-            made_change = True
             
-        elif choice == "7":
-            print("==== Listing Front Desk ====")
+        elif choice == "4":
+            print("==== Listing Front Desk ====") #Listing teacher or student are assigned in one category as they are similar features
             print("1. List Teacher")
             print("2. List Student")
             choice_2 = input("Enter Your Choice: ")
-            if choice_2 == "1":
+            if choice_2 == "1": 
                 list_teachers()
             if choice_2 == "2":
                 list_students()
             made_change = True
-        elif choice == "8":
-            print("==== Searching Front Desk ====")
+
+        elif choice == "5":
+            print("==== Searching Front Desk ====") #Searching teacher or student are assigned in one cateogot=ry as they are similar features
             print("1. Seacrh for teacher")
             print("2. Search for student")
             choice_2 = input("\nPlease enter your choice: ")
@@ -401,6 +307,124 @@ def main():
             if choice_2 == "2":
                 term = input("\nPlease enter your choice: ")
                 find_student(term)
+
+        elif choice == "6":
+            password = input("Please enter your password: ") #Password is required while entering a admin only features
+            """To determine that the one entering the features is a student or a teacher"""
+            if check_password(password):
+                validation = 2
+            if check_student_password(password) and not check_password(password):
+                validation = 1
+            if not check_password(password) and not check_student_password(password):
+                print("Wrong Password!")
+                validation = False
+            
+            while validation == 1 or validation == 2:
+                print("==== Admin Only Features ====")
+                print("1. Update teacher and student info")
+                print("2. Remove teacher and student")
+                print("3. Add teacher")
+                print("r. Return")
+
+                choice_2 = input("\nEnter Your Choice: ")
+                if choice_2 == "1":
+                    print("==== Updating Front Desk=====")
+                    print("1. Update Student Profile")
+                    print("2. Update Teacher Profile")
+                    choice_4 = input("\nPlese Enter Your Choice:")
+                    if choice_4 == "1":
+                            id = input("\nPlease enter your id: ")
+                            if check_student_id(id):
+                                find_student(id)
+                                print("\n1. Name")
+                                print("2. Enrolment")
+                                print("3. Quit")
+                                choice_3 = input("\nPlease enter your choice")
+                                if choice_3 == "1":
+                                    new_name = input("\nPlease enter a new name:")
+                                    update_student(id, name=new_name)
+                                elif choice_3 == "2":
+                                    user_input = input("\nPlease enter your new enrolment seperated by comma and the old instrument should be included if you still want to enrol")
+                                    new_enrolment = [i.strip() for i in user_input.split(",")]
+                                    update_student(id, enrolled_in=new_enrolment )
+                                elif choice_3 == "3":
+                                    pass
+                                else:
+                                    print("Invalid Input!")
+                    elif choice_4 == "2":
+                        if validation == 1:
+                            print("Error: Higher Permission is required for this functionality")
+                            break
+                        id = input("\nPlease enter your id: ")
+                        if check_teacher_id(id):
+                            find_teacher(id)
+                            print("\n1. Name")
+                            print("2. Specialty")
+                            print("3. Quit")
+                            choice_3 = input("\nPlease enter your choice")
+                            if choice_3 == "1":
+                                new_name = input("\nPlease enter a new name:")
+                                update_teacher(id, name=new_name)
+                            elif choice_3 == "2":
+                                new_specialty = input("Please enter your new specialty")
+                                update_teacher(id, specialty=new_specialty )
+                            elif choice_3 == "3":
+                                pass
+                            else:
+                                print("Invalid Input!")
+                    else:
+                        print("Invalid Input!")
+                elif choice_2 == "2":
+                    print("==== Removing Front Desk ====")
+                    print("1. Remove Student")
+                    print("2. Remove Teacher")
+                    choice_4 = input("\nPlease enter your choice: ")
+                    if validation == 1:
+                        print("Error: Higher Permission is required for this functionality")
+                        break
+                    if choice_4 == "1":
+                        id = input("\nEnter the student id: ")
+                        if check_student_id(id):
+                            find_student(id)
+                            print("REMINDER: Please make sure this is the correct student profile to delete as it can't be recovered anymore!")
+                            print("1. Yes")
+                            print("2. No")
+                            choice_3 = input("\nPlease enter your choice: ")
+                            if choice_3 == "1":
+                                remove_student(id)
+                            elif choice_3 == "2":
+                                pass
+                            else:
+                                print("Invalid Input!")
+                    if choice_4 == "2":
+                        id = input("\nEnter the teacher id: ")
+                        if check_teacher_id(id):
+                            find_teacher(id)
+                            print("REMINDER: Please make sure this is the correct teacher profile to delete as it can't be recovered anymore!")
+                            print("1. Yes")
+                            print("2. No")
+                            choice_3 = input("\nPlease enter your choice: ")
+                            if choice_3 == "1":
+                                remove_teacher(id)
+                            elif choice_3 == "2":
+                                pass
+                            else:
+                                print("Invalid Input!")
+                    else:
+                        print("Invalid Input!")
+                elif choice_2 == "3":
+                    if validation == 1:
+                        print("Error: Higher Permission if required for this speciality")
+                        break
+                    name = input("\nEnter your name: ")
+                    specialty = input("Enter your teaching specialty: ")
+                    add_teacher(name,specialty)
+                
+                elif choice_2 == "r":
+                    pass
+                validation = False
+            made_change = True
+
         elif choice.lower() == "q":
             print("Saving final changes and Exiting program. Goodbye!")
             made_change = True

@@ -32,13 +32,16 @@ The system allows registration of students, management of teachers and students 
 - **Password Checks**: Separate admin and student/teacher passwords for access control  
 
 ### 🔹 Core Functions
-1. **Add Teacher** — Add new teacher records with specialty  
-2. **Register Student** — Register new students with initial enrollment  
-3. **Update** — Modify names, specialties, or student enrollments  
-4. **Remove** — Delete records after confirmation  
-5. **List Records** — Display teachers or students list in a neat, tabular format  
-6. **Attendance Tracking** — Record course check-ins for students  
-7. **Print Student Card** — Generate an ID badge file for each student  
+1. **Register Student** — Register new students with initial enrollment  
+2. **List Records** — Display teachers or students list in a neat, tabular format  
+3. **Attendance Tracking** — Record course check-ins for students  
+4. **Print Student Card** — Generate an ID badge file for each student  
+
+### 🔹 Admin-Only Features
+- Password required before entering the admin features  
+1. **Update** — Modify names, specialties, or student enrollments  
+2. **Remove** — Delete records after confirmation  
+3. **Add Teacher** — Add new teacher records with specialty  
 
 ### 🔹 Lookup Features
 - **Find Student** by ID or name  
@@ -66,7 +69,7 @@ When the program starts, a menu will appear:
 
 ## 🚀 How to Run
 - While the program runs, it will show a `menu` first
-- User and enter number 1-8 or letter **`q`** to do decision
+- User and enter number 1-6 or letter **`q`** to do decision
 - After every action, changes are automatically saved to `msms.json` and the menu will be shown again
 - The program will always be ran unless the user enter **`q`**
 - If user enter neither number 1-6 nor **`q`**, then remind it is invalid input and show the menu again
