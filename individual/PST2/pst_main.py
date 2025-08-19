@@ -62,7 +62,6 @@ def check_teacher_id(id):
 def check_password(password):
     """For teacher to enter admin only features"""
     correct_password = "1234567"
-    print("Please enter passcode to verify your identity")
     if password == correct_password:
         print("Core: Correct Password!")
         return True
@@ -313,9 +312,9 @@ def main():
             """To determine that the one entering the features is a student or a teacher"""
             if check_password(password):
                 validation = 2
-            if check_student_password(password) and not check_password(password):
+            elif check_student_password(password) and not check_password(password):
                 validation = 1
-            if not check_password(password) and not check_student_password(password):
+            elif not check_password(password) and not check_student_password(password):
                 print("Wrong Password!")
                 validation = False
             
