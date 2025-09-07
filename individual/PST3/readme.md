@@ -65,15 +65,19 @@ The system supports registration of students, management of teachers and courses
 ## 📟 Menu Interface
 
 - **Front Desk / General Menu**:
+
 ![Front Desk Image](image.png)
 
 - **Admin Menu** (Password protected):
+
 ![Admin Menu](image-5.png)
 
 - **Student Menu** (Password protected):
+
 ![Student Menu](image-1.png)
 
 - **Teacher Menu** (Password protected):
+
 ![Teacher Menu](image-4.png)
 
 ---
