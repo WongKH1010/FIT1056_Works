@@ -16,7 +16,7 @@ class SchoolManager:
         self.courses = []
         self.attendance_log = []
         self.next_student_id = 1
-        self.next_teacher_id = 1
+        self._next_teacher_id = 1
         self._load_data()
 
     # --- Persistence ---
@@ -135,7 +135,7 @@ class SchoolManager:
 
     def enroll_student_in_course(self, student_id, course_id):
         student = self.find_student(student_id)
-        course = next((c for c in self.courses if str(c.id) == str(course_id)), None)
+        course = self.find_course_by_id(course_id)
         if student and course:
             student.enroll_in(course.instrument)
             course.enroll_student(student.id)
