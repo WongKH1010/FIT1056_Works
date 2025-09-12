@@ -11,4 +11,4 @@ class StudentUser(User):
             self.enrolled_in.append(instrument)
 
     def update_enrollment(self, new_enrollment):
-        self.enrolled_in = new_enrollment
+        self.enrolled_in = new_enrollment   

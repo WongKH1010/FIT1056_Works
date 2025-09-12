@@ -153,7 +153,7 @@ def admin_menu(manager):
                 if not teacher:
                     print("Teacher not found.")
                     continue
-                print(f"Teacher: {teacher.name}, Specialty: {teacher.speciality}")
+                print(f"Teacher: {teacher.name}, Specialty: {teacher.specialty}")
                 print("1. Change Name")
                 print("2. Change Specialty")
                 print("3. Cancel")
@@ -165,7 +165,7 @@ def admin_menu(manager):
                     print("Teacher name updated.")
                 elif t_choice == "2":
                     new_spec = input("Enter new specialty: ")
-                    teacher.speciality = new_spec
+                    teacher.specialty = new_spec
                     manager._save_data()
                     print("Teacher specialty updated.")
                 elif t_choice == "3":
@@ -279,11 +279,13 @@ def main():
             admin_menu(manager)
         elif choice == "q":
             print("Exiting... Goodbye!")
+            manager._save_data()
             break
         else:
             print("Invalid choice")
 
 if __name__ == "__main__":
     main()
+
 
 

@@ -9,14 +9,14 @@ class SchoolManager:
     ADMIN_PASSWORD = "1234567"
     STUDENT_PASSWORD = "7654321"
 
-    def __init__(self, data_path="msms.json"):
+    def __init__(self, data_path="individual/PST3/data/msms.json"):
         self.data_path = data_path
         self.students = []
         self.teachers = []
         self.courses = []
         self.attendance_log = []
         self.next_student_id = 1
-        self._next_teacher_id = 1
+        self.next_teacher_id = 1
         self._load_data()
 
     # --- Persistence ---
@@ -24,8 +24,8 @@ class SchoolManager:
         try:
             with open(self.data_path, "r") as f:
                 data = json.load(f)
-                self.students = [StudentUser(**s) for s in data.get("students", [])]
                 self.teachers = [TeacherUser(**t) for t in data.get("teachers", [])]
+                self.students = [StudentUser(**s) for s in data.get("students", [])]
                 self.courses = [Course(**c) for c in data.get("courses", [])]
                 self.attendance_log = data.get("attendance", [])
                 self.next_student_id = data.get("next_student_id", 1)

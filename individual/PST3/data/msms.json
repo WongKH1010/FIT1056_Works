@@ -3,7 +3,7 @@
         {
             "id": 1,
             "name": "Alice Johnson",
-            "enrolled_course_ids": [
+            "enrolled_in": [
                 101,
                 103
             ]
@@ -11,7 +11,7 @@
         {
             "id": 2,
             "name": "Bob Williams",
-            "enrolled_course_ids": [
+            "enrolled_in": [
                 102
             ]
         }
@@ -20,12 +20,12 @@
         {
             "id": 1,
             "name": "Dr. Evelyn Keys",
-            "speciality": "Piano"
+            "specialty": "Piano"
         },
         {
             "id": 2,
             "name": "Mr. David Fret",
-            "speciality": "Guitar"
+            "specialty": "Guitar"
         }
     ],
     "courses": [
