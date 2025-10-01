@@ -3,12 +3,32 @@ import streamlit as st
 import pandas as pd
 
 def show_roster_page(manager):
-    """Renders the daily roster and check-in functionality."""
+
     st.header("Daily Roster")
 
-    # --- View Roster Section (remains the same) ---
     day = st.selectbox("Select a day", ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"])
     # ... (code to display the dataframe) ...
+    if day:
+        schedule = []
+        for c in manager.courses:
+            for l in c.lessons:
+                if l['day'].lower() == day.lower():
+                    schedule.append(
+                        {
+                            "Course ID": c.id,
+                            "Course Name": c.name,
+                            "Instrument": c.instrument,
+                            "Lesson ID": l['lesson_id'],
+                            "Start Time": l['start_time'],
+                            "Room": l['room']
+                        }
+                    )
+        if schedule:
+            df = pd.DataFrame(schedule)
+            st.dataframe(df)
+        else:
+            st.warning(f"No class found for {day}")
+
     
     # --- Student Check-in Section (now works correctly) ---
     st.subheader("Student Check-in")
