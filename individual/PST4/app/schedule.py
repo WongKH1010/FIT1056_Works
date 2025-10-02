@@ -47,14 +47,25 @@ class ScheduleManager:
                 return s
         return None
     
+    def list_student(self,id,name):
+        found = []
+        for s_2 in self.students:
+            if str(s_2.id) == str(id).strip() or str(name).lower().strip() in str(s_2.name).lower().strip():
+                found.append({
+                    "ID": s_2.id,
+                    "Name": s_2.name,
+                    "Enrolled Courses": s_2.enrolled_course_ids
+                })
+        return found
+    
     def find_student_pro(self,id,name):
         found_s_2 = []
         for s_2 in self.students:
             if str(s_2.id) == str(id).strip() and str(name).lower().strip() in str(s_2.name).lower().strip():
                 found_s_2.append({
-                    "id": s_2.id,
-                    "name": s_2.name,
-                    "enrolled_course_ids": s_2.enrolled_course_ids
+                    "ID": s_2.id,
+                    "Name": s_2.name,
+                    "Enrolled Course": s_2.enrolled_course_ids
                 })
         return found_s_2
     
@@ -63,15 +74,26 @@ class ScheduleManager:
             if str(t.id) == str(term) or term.lower() in t.name.lower():
                 return t
         return None
+
+    def list_teacher(self,id,name):
+        found = []
+        for t_2 in self.teachers:
+            if str(t_2.id) == str(id).strip() or str(name).lower().strip() in str(t_2.name).lower().strip():
+                found.append({
+                    "ID": t_2.id,
+                    "Name": t_2.name,
+                    "Speciality": t_2.speciality
+                })
+        return found
         
     def find_teacher_pro(self,id,name):
         found_t_2 = []
         for t_2 in self.teachers:
             if str(t_2.id) == str(id).strip() and str(name).lower().strip() in str(t_2.name).lower().strip():
                 found_t_2.append({
-                    "id": t_2.id,
-                    "name": t_2.name,
-                    "speciality": t_2.speciality
+                    "ID": t_2.id,
+                    "Name": t_2.name,
+                    "Speciality": t_2.speciality
                 })
         return found_t_2
     

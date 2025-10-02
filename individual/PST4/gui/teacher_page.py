@@ -14,25 +14,13 @@ def show_teacher_update_page(manager):
 
         if find:
             if (find_name and not find_id) or (find_id and not find_name):
-                found = []
-                for f in manager.find_teacher(find_name or find_id):
-                    if f:
-                        found.append({
-                            "id": f.id,
-                            "name": f.name,
-                            "speciality": f.speciality
-                        })
-                    else:
-                        st.warning("No teacher found")
-                df = pd.DataFrame(found)  # found is already a list of dicts
+                found = manager.list_teacher(find_id or find_name) or [{'ID':None,"Name":None,"Speciality":None}]
+                df = pd.DataFrame(found) 
                 st.dataframe(df)
             elif find_name and find_id:
-                found = manager.find_teacher_pro(find_id, find_name)
-                if found:
-                    df = pd.DataFrame(found)  # found is already a list of dicts
-                    st.dataframe(df)
-                else:
-                    st.warning("No teacher found")
+                found = manager.find_teacher_pro(find_id, find_name) or [{'ID':None,"Name":None,"Speciality":None}]
+                df = pd.DataFrame(found)
+                st.dataframe(df)
             else:
                 st.error("Please enter a name, an ID, or both to search.")
 
