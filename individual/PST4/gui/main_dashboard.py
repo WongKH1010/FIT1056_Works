@@ -24,7 +24,7 @@ def launch():
     elif page == "Student Management":
         show_student_management_page(st.session_state.manager)
     elif page == "Teacher Management":
-        show_teacher_page()
+        show_teacher_page(st.session_state.manager)
     elif page == "Daily Roster":
         show_roster_page(st.session_state.manager)
     elif page == "Course Page":
