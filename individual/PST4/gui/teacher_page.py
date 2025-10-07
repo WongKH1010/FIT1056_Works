@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 
-def show_teacher_update_page(manager):
+def show_teacher_page(manager):
     st.header("Teacher Management")
     st.subheader("Find a Teacher")
 
