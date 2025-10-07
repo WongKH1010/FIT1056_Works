@@ -16,7 +16,7 @@ def launch():
 
     st.sidebar.title("MSMS Navigation")
 
-    page = st.sidebar.radio("Go to", ["Home Page","Student Management","Teacher Management" "Daily Roster", "Payments (stub)"])
+    page = st.sidebar.radio("Go to", ["Home Page","Student Management","Teacher Management", "Daily Roster", "Payments (stub)"])
 
 
     if page == "Home Page":
