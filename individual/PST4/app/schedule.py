@@ -47,10 +47,10 @@ class ScheduleManager:
                 return s
         return None
     
-    def list_student(self,id,name):
+    def list_student(self,term):
         found = []
         for s_2 in self.students:
-            if str(s_2.id) == str(id).strip() or str(name).lower().strip() in str(s_2.name).lower().strip():
+            if str(s_2.id) == str(term).strip() or str(term).lower().strip() in str(s_2.name).lower().strip():
                 found.append({
                     "ID": s_2.id,
                     "Name": s_2.name,
@@ -75,10 +75,10 @@ class ScheduleManager:
                 return t
         return None
 
-    def list_teacher(self,id,name):
+    def list_teacher(self,term):
         found = []
         for t_2 in self.teachers:
-            if str(t_2.id) == str(id).strip() or str(name).lower().strip() in str(t_2.name).lower().strip():
+            if str(t_2.id) == str(term).strip() or str(term).lower().strip() in str(t_2.name).lower().strip():
                 found.append({
                     "ID": t_2.id,
                     "Name": t_2.name,

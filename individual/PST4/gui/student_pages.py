@@ -13,7 +13,7 @@ def show_student_management_page(manager):
         find_id = st.text_input("Enter the student id you want to find")
         st.caption("You can enter both or either one")
         find = st.form_submit_button("Search")
-
+    
         if find:
             if (find_name and not find_id) or (find_id and not find_name):
                 found = manager.list_student(find_id or find_name) or [{'ID':None,"Name":None,"Enrolled Course":None}]
