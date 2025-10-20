@@ -51,7 +51,7 @@ class ScheduleManager:
     
     def find_student(self, term):
         for s in self.students:
-            if str(s.id) == str(term) or term.lower() in s.name.lower():
+            if str(s.id) == str(term) or str(term).lower() in s.name.lower():
                 return s
         return None
     
@@ -79,7 +79,7 @@ class ScheduleManager:
     
     def find_teacher(self, term):
         for t in self.teachers:
-            if str(t.id) == str(term) or term.lower() in t.name.lower():
+            if str(t.id) == str(term) or str(term).lower() in t.name.lower():
                 return t
         return None
 
@@ -142,12 +142,12 @@ class ScheduleManager:
             return True
 
     
-    def add_course(self, name, instrument, teacher_id):
+    def add_course(self, name, instrument, teacher_id,fee):
         teacher = self.find_teacher(teacher_id)
         if not teacher:
             return False
         course_id = max([c.id for c in self.courses], default=100) + 1
-        course = Course(course_id, name, instrument, teacher_id,[], [])
+        course = Course(course_id, name, instrument, teacher_id,[], [],fee)
         self.courses.append(course)
         self._save_data()
         logging.info(f"Successfully added course 'Course ID: {course_id}  Course Name : {name}'")
@@ -262,6 +262,43 @@ class ScheduleManager:
         # TODO: Use a list comprehension to filter self.finance_log
         # and return only the records that match the student_id.
         return [p for p in self.finance_log if p['student_id'] == student_id]
+    
+    def get_student_bill(self, student_id):
+        """Returns a summary of the student's billing, including total fees, payments, and balance."""
+        student = self.find_student(student_id)
+        if not student:
+            print("Student not found.")
+            return None
+
+        # Calculate total course fees
+        total_fees = 0.0
+        enrolled_courses = []
+        for cid in getattr(student, "enrolled_course_ids", []):
+            course = self.find_course(cid)
+            if course:
+                total_fees += getattr(course, "fees", 0.0)
+                enrolled_courses.append(course.id)
+
+        # Calculate total paid
+        payments = [p for p in self.finance_log if p["student_id"] == student_id]
+        total_paid = sum(p["amount"] for p in payments)
+
+        # Balance
+        balance = total_fees - total_paid
+
+        # Return full summary
+        bill_summary = [{
+            "student_id": student.id,
+            "student_name": student.name,
+            "courses": enrolled_courses,
+            "total_fees": total_fees,
+            "total_paid": total_paid,
+            "balance_due": balance,
+            "payment_history": payments
+        }]
+
+        return bill_summary
+
 
     def export_report(self, kind, out_path):
         """Exports a log to a CSV file."""

@@ -24,17 +24,17 @@ def show_finance_page(manager):
             manager.record_payment(student_id, amount, method)
             st.success(f"Payment of {amount} for {selected_student_name} recorded.")
 
-    # --- Section 2: View Payment History ---
-    st.subheader("View Student Payment History")
+    # --- Section 2: View Bills ---
+    st.subheader("View Student Bills")
     # TODO: Create a selectbox to choose a student.
-    history_student_name = st.selectbox("Select Student to View History", student_list.keys())
+    history_student_name = st.selectbox("Select Student to View Bills", student_list.keys())
     if history_student_name:
         history_student_id = student_list[history_student_name]
         # TODO: Call manager.get_payment_history().
-        history = manager.get_payment_history(history_student_id)
+        history = manager.get_student_bill(history_student_id)
         if history:
             # TODO: Convert the list of dictionaries to a pandas DataFrame and display it.
             df = pd.DataFrame(history)
             st.dataframe(df)
         else:
-            st.info("This student has no payment history.")
+            st.info("This student has no bills.")

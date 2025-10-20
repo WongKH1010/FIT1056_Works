@@ -17,7 +17,7 @@ def launch():
 
     st.sidebar.title("MSMS Navigation")
 
-    page = st.sidebar.radio("Go to", ["Home Page","Student Management","Teacher Management", "Daily Roster", "Payments"])
+    page = st.sidebar.radio("Go to", ["Home Page","Student Management","Teacher Management", "Course Management","Daily Roster", "Payments"])
 
 
     if page == "Home Page":
@@ -28,7 +28,7 @@ def launch():
         show_teacher_page(st.session_state.manager)
     elif page == "Daily Roster":
         show_roster_page(st.session_state.manager)
-    elif page == "Course Page":
+    elif page == "Course Management":
         show_course_page(st.session_state.manager)
     elif page == "Payments":
         show_finance_page(st.session_state.manager)
