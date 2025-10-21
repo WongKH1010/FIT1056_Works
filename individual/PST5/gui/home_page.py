@@ -1,5 +1,6 @@
 import streamlit as st
 from app.admin_utils import backup_data
+from app.schedule import ScheduleManager
 
 def show_home_page(manager):
     st.title("🎶 Music School Management System")
@@ -44,3 +45,13 @@ def show_home_page(manager):
     back_up = st.button("Back up")
     if back_up:
         backup_data()
+
+    st.subheader("Export Report")
+    export = st.selectbox("finance","attendance")
+    download = st.download_button(
+        label = "Export as CSV",
+        data = "PST5/report.csv",
+        file_name = f"{export}_report.csv",
+        on_click= ScheduleManager.export_report,
+        args=(export,"PST5/report.csv")
+    )
